@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object_Repository>
+       <Application name="Gmail">
+              <PageNode name="LoginPage">
+                     <Object name="UserId">
+                           <id>userid</id>
+                           <repo>Gmail.LoginPage.UserId</repo>
+                     </Object>
+                     <Object name="Password">
+                           <name>password</name>
+                           <repo>Gmail.LoginPage.Password</repo>
+                     </Object>
+                     <Object name="Submit">
+                           <xpath>//*[@id='submit']</xpath>
+                           <repo>Gmail.LoginPage.Submit</repo>
+                     </Object>
+              </PageNode>
+              <PageNode name="HomePage">
+                     <Object name="WelcomeMsg">
+                           <xpath>//h2</xpath>
+                           <repo>Gmail.HomePage.WelcomeMsg</repo>
+                     </Object>
+                     <Object name="Logout">
+                           <xpath>//*[@id='logout']</xpath>
+                           <repo>Gmail.HomePage.Logout</repo>
+                     </Object>
+              </PageNode>
+       </Application>
+       <Application name="Bing">
+              <PageNode name="Search">
+                     <Object name="searchbox">
+                           <id>q</id>
+                           <repo>Bing.Search.searchbox</repo>
+                     </Object>
+              </PageNode>
+       </Application>
+</Object_Repository>
