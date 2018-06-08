@@ -55,7 +55,10 @@ public class ObjectRepository {
 	Set<String> moduleSet = new HashSet<>();
 	Set<String> pageSet = new HashSet<>();
 	Set<String> objectSet = new HashSet<>();
-
+	int nRow;
+	int nCol;
+	List<Grid> gridList = new ArrayList<>();
+	
 	List<Application> appList = new ArrayList<>();
 
 	/**
@@ -182,14 +185,6 @@ public class ObjectRepository {
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * objectLocator = new ArrayList<>();
-				 * objectLocator.add(objectProperties.getText());
-				 * objectLocator.add(locatorCombo.getSelectedItem().toString());
-				 * objectMapper.put(moduleCombo.getSelectedItem().toString() +
-				 * "." + pageCombo.getSelectedItem().toString() + "." +
-				 * objectCombo.getSelectedItem().toString(), objectLocator);
-				 */
 				dataList = new ArrayList<>();
 				String app = moduleCombo.getSelectedItem().toString();
 				String page = pageCombo.getSelectedItem().toString();
@@ -241,7 +236,6 @@ public class ObjectRepository {
 		JButton btnSubmit = new JButton("SUBMIT");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				prepareXMLTemplate(appList);
 
 			}
@@ -253,20 +247,8 @@ public class ObjectRepository {
 		btnImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					/*table = new JTable();
-					table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-					table.setCellSelectionEnabled(true);
-					table.setBorder(new LineBorder(new Color(0, 0, 0)));
-					table.setBackground(SystemColor.activeCaption);
-					JScrollPane scrollPane = new JScrollPane();
-					scrollPane.setViewportView(table);
-					frame.getContentPane().add(scrollPane);
-					table.setColumnSelectionAllowed(true);
-					table.setCellSelectionEnabled(true);
-
-					table.setShowHorizontalLines(true);
-					table.setShowVerticalLines(true);*/
 					loadXMLFile();
+					getTableData();
 				} catch (XPathExpressionException | SAXException | IOException
 						| ParserConfigurationException | TransformerException
 						| XMLStreamException e) {
@@ -359,5 +341,45 @@ public class ObjectRepository {
 			dataList.add(element.getAttribute("property").toString());
 			populateRows(dataList);
 		}
+	}
+	
+	public void getTableData() {
+		nRow = dm.getRowCount();
+		nCol = dm.getColumnCount();
+		Object[][] tableData = new Object[nRow][nCol];
+		for (int rowIndex = 0; rowIndex < nRow; rowIndex++) {
+			List<String> dataList = new ArrayList<>();
+			Grid grid = new Grid();
+			grid.setObjectName(dm.getValueAt(rowIndex, 0).toString());
+			grid.setFindBy(dm.getValueAt(rowIndex, 1).toString());
+			grid.setProperties(dm.getValueAt(rowIndex, 2).toString());
+			gridList.add(grid);
+			
+			String app = dm.getValueAt(rowIndex, 0).toString().split("\\.")[0];
+			String page = dm.getValueAt(rowIndex, 0).toString().split("\\.")[1];
+			String locator = dm.getValueAt(rowIndex, 1).toString();
+			String object = dm.getValueAt(rowIndex, 0).toString().split("\\.")[2];
+			String objectProperty = dm.getValueAt(rowIndex, 2).toString();
+			boolean appFlag = false;
+			System.out.println(app+page+object);
+			for (Application application : appList) {
+				appFlag = false;
+				if (application.getApp().equals(app)) {
+					application.setPage(page, locator, object,
+							objectProperty);
+					appFlag = true;
+					break;
+				}
+			}
+
+			if (!appFlag) {
+				Application application = new Application();
+				application.setApp(app);
+				application.setPage(page, locator, object, objectProperty);
+				appList.add(application);
+			}
+			
+		}
+		
 	}
 }
