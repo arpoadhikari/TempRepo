@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.MainViewController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="New" />
+          <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openFile" prefWidth="100.0" text="Open" />
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Save" />
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Save As" />
+        </items>
+      </ToolBar>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="499.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+        <items>
+          <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="33.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="179.0" text="Add/Delete Objects" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="applicationNameInput" layoutX="15.0" layoutY="85.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Application Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="testTextField1" layoutX="15.0" layoutY="135.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Page Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="testTextField11" layoutX="15.0" layoutY="185.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Object Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="testTextField111" layoutX="15.0" layoutY="235.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Object Properties" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <ComboBox fx:id="locatorTypeCombo" layoutX="15.0" layoutY="285.0" prefHeight="31.0" prefWidth="261.0" promptText="Locator Type" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <GridPane layoutX="15.0" layoutY="331.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Add / Change" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                     </children>
+                  </GridPane>
+                  <GridPane layoutX="15.0" layoutY="376.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Delete" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minWidth="650.0">
+               <children>
+                  <TableView fx:id="orTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="690.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn fx:id="objectName" minWidth="100.0" prefWidth="231.0" text="Object Name" />
+                        <TableColumn fx:id="locatorType" minWidth="90.0" prefWidth="90.0" text="Locator Type" />
+                        <TableColumn fx:id="objectProperties" minWidth="120.0" prefWidth="341.0" text="Object Properties" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </SplitPane>
+      <HBox prefHeight="20.0" prefWidth="1000.0">
+         <children>
+            <Pane prefHeight="21.0" prefWidth="736.0" HBox.hgrow="ALWAYS" />
+            <Label fx:id="statusText" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="268.0" text="Status" HBox.hgrow="NEVER" />
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
