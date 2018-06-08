@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object_Repository>
+  <Application name="A">
+    <Page name="B">
+      <Object reference="C" locatorType="id" property="a">A.B.C</Object>
+      <Object reference="D" locatorType="xpath" property="abc">A.B.D</Object>
+    </Page>
+  </Application>
+  <Application name="X">
+    <Page name="B">
+      <Object reference="C" locatorType="name" property="ab">X.B.C</Object>
+    </Page>
+  </Application>
+</Object_Repository>
