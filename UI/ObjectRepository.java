@@ -37,6 +37,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -50,7 +51,7 @@ public class ObjectRepository {
 	JComboBox pageCombo = new JComboBox();
 	JComboBox objectCombo = new JComboBox();
 	JComboBox<String> locatorCombo;
-	List<String> dataList;
+	List<String> dataList = new ArrayList<>();
 	Set<String> moduleSet = new HashSet<>();
 	Set<String> pageSet = new HashSet<>();
 	Set<String> objectSet = new HashSet<>();
@@ -168,7 +169,8 @@ public class ObjectRepository {
 		frame.getContentPane().add(locator);
 		locatorCombo = new javax.swing.JComboBox<>();
 		locatorCombo.setModel(new javax.swing.DefaultComboBoxModel<>(
-				new String[] { "", "id", "name", "cssSelector", "linkText", "partialLinkText", "tagName", "xpath" }));
+				new String[] { "", "id", "name", "cssSelector", "linkText",
+						"partialLinkText", "tagName", "xpath" }));
 		locatorCombo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -184,8 +186,8 @@ public class ObjectRepository {
 				 * objectLocator = new ArrayList<>();
 				 * objectLocator.add(objectProperties.getText());
 				 * objectLocator.add(locatorCombo.getSelectedItem().toString());
-				 * objectMapper.put(moduleCombo.getSelectedItem().toString() + "." +
-				 * pageCombo.getSelectedItem().toString() + "." +
+				 * objectMapper.put(moduleCombo.getSelectedItem().toString() +
+				 * "." + pageCombo.getSelectedItem().toString() + "." +
 				 * objectCombo.getSelectedItem().toString(), objectLocator);
 				 */
 				dataList = new ArrayList<>();
@@ -203,7 +205,8 @@ public class ObjectRepository {
 				for (Application application : appList) {
 					appFlag = false;
 					if (application.getApp().equals(app)) {
-						application.setPage(page,locator,object,objectProperty);
+						application.setPage(page, locator, object,
+								objectProperty);
 						appFlag = true;
 						break;
 					}
@@ -212,7 +215,7 @@ public class ObjectRepository {
 				if (!appFlag) {
 					Application application = new Application();
 					application.setApp(app);
-					application.setPage(page,locator,object,objectProperty);
+					application.setPage(page, locator, object, objectProperty);
 					appList.add(application);
 				}
 
@@ -240,23 +243,36 @@ public class ObjectRepository {
 			public void actionPerformed(ActionEvent e) {
 
 				prepareXMLTemplate(appList);
-			
+
 			}
 		});
 		btnSubmit.setBounds(749, 321, 89, 23);
 		frame.getContentPane().add(btnSubmit);
-		
+
 		JButton btnImport = new JButton("IMPORT");
 		btnImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					/*table = new JTable();
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+					table.setCellSelectionEnabled(true);
+					table.setBorder(new LineBorder(new Color(0, 0, 0)));
+					table.setBackground(SystemColor.activeCaption);
+					JScrollPane scrollPane = new JScrollPane();
+					scrollPane.setViewportView(table);
+					frame.getContentPane().add(scrollPane);
+					table.setColumnSelectionAllowed(true);
+					table.setCellSelectionEnabled(true);
+
+					table.setShowHorizontalLines(true);
+					table.setShowVerticalLines(true);*/
 					loadXMLFile();
 				} catch (XPathExpressionException | SAXException | IOException
 						| ParserConfigurationException | TransformerException
 						| XMLStreamException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnImport.setBounds(10, 54, 89, 23);
@@ -272,66 +288,76 @@ public class ObjectRepository {
 
 	public void prepareXMLTemplate(List<Application> appList) {
 		Document doc = new Document();
-        Element rootElement = new Element("Object_Repository");
-        doc.setRootElement(rootElement);
-        Element application   = null;
-        Element pageNode ;
-        Element object = null;
-        /**
-         * R_Start.moduleList contains all different sets of modules and its details
-         */
-        for(Application app: appList) {
-        	application=new Element("Application");
-        	application.setAttribute("name",app.getApp());
-        	
-        	/**
-        	 * R_Start.moduleList.get(moduleName) contains the details of individual test cases within the modules
-        	 */
-        	for(Page p:app.getPage()) {
-        		pageNode = new Element("Page");
-        		pageNode.setAttribute("name",p.getPage());
-        		application.addContent(pageNode);
-        		for(ObjectProperty o:p.getobjectPropertyList()) {
-        			object = new Element("Object");
-        			object.setAttribute("reference",o.getObject());
-        			object.setAttribute("locatorType",o.getLocator());
-        			object.setAttribute("property",o.getObjectProperty());
-        			object.setText(app.getApp()+"."+p.getPage()+"."+o.getObject());
-        			pageNode.addContent(object);
-        		}
-        	}
-        	doc.getRootElement().addContent(application);
-        }
-            
-            
-        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-        try {
-			xmlOutputter.output(doc, new FileOutputStream(System.getProperty("user.dir")+"/CICD/Test" +".xml"));
+		Element rootElement = new Element("Object_Repository");
+		doc.setRootElement(rootElement);
+		Element application = null;
+		Element pageNode;
+		Element object = null;
+		/**
+		 * R_Start.moduleList contains all different sets of modules and its
+		 * details
+		 */
+		for (Application app : appList) {
+			application = new Element("Application");
+			application.setAttribute("name", app.getApp());
+
+			/**
+			 * R_Start.moduleList.get(moduleName) contains the details of
+			 * individual test cases within the modules
+			 */
+			for (Page p : app.getPage()) {
+				pageNode = new Element("Page");
+				pageNode.setAttribute("name", p.getPage());
+				application.addContent(pageNode);
+				for (ObjectProperty o : p.getobjectPropertyList()) {
+					object = new Element("Object");
+					object.setAttribute("reference", o.getObject());
+					object.setAttribute("locatorType", o.getLocator());
+					object.setAttribute("property", o.getObjectProperty());
+					object.setText(app.getApp() + "." + p.getPage() + "."
+							+ o.getObject());
+					pageNode.addContent(object);
+				}
+			}
+			doc.getRootElement().addContent(application);
+		}
+
+		XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+		try {
+			xmlOutputter.output(doc,
+					new FileOutputStream(System.getProperty("user.dir")
+							+ "/CICD/Test" + ".xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 
 		}
 	}
-	
+
 	public void loadXMLFile() throws SAXException, IOException,
-	ParserConfigurationException, TransformerException,
-	XMLStreamException, XPathExpressionException {
-		javax.xml.parsers.DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		javax.xml.parsers.DocumentBuilder builder = factory.newDocumentBuilder();
+			ParserConfigurationException, TransformerException,
+			XMLStreamException, XPathExpressionException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
 		org.w3c.dom.Document doc = builder.parse(new File(
-				"C:\\GTAF_Release\\GTAF_6.5_SC\\Libraries\\Sample.xml"));
+				"C:\\GTAF_Release\\GTAF_6.5_SC\\Libraries\\CICD\\Test.xml"));
 		XPathFactory xPathfactory = XPathFactory.newInstance();
 		XPath xpath = xPathfactory.newXPath();
-		XPathExpression repo = xpath.compile("//repo");
-		XPathExpression object = xpath.compile("//Object/*[1]");
-		NodeList repoList = (NodeList) repo.evaluate(doc,
-				XPathConstants.NODESET);
+		XPathExpression object = xpath.compile("//Object");
 		NodeList objectList = (NodeList) object.evaluate(doc,
 				XPathConstants.NODESET);
-		for (int i = 0; i < repoList.getLength(); i++) {
-			System.out.println(repoList.item(i).getTextContent().trim());
-			System.out.println(objectList.item(i).getNodeName() + "~"
-					+ objectList.item(i).getTextContent().trim());
+		for (int i = 0; i < objectList.getLength(); i++) {
+			dataList = new ArrayList<>();
+			System.out.println(objectList.item(i).getTextContent());
+			Node node = objectList.item(i);
+			org.w3c.dom.Element element = (org.w3c.dom.Element) node;
+			System.out.println(element.getAttribute("reference"));
+			System.out.println(element.getAttribute("locatorType"));
+			System.out.println(element.getAttribute("property"));
+			
+			dataList.add(objectList.item(i).getTextContent());
+			dataList.add(element.getAttribute("locatorType").toString());
+			dataList.add(element.getAttribute("property").toString());
+			populateRows(dataList);
 		}
 	}
 }
