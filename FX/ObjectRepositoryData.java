@@ -1,12 +1,16 @@
 package application.support;
 
-public class ObjectRepository {
+/**
+ * It handles the ObjectRepository table data
+ *
+ */
+public class ObjectRepositoryData {
 
 	private String objectName;
 	private String locatorType;
 	private String objectProperties;
 
-	public ObjectRepository(String objectName, String locatorType, String objectProperties) {
+	public ObjectRepositoryData(String objectName, String locatorType, String objectProperties) {
 		this.objectName = objectName;
 		this.locatorType = locatorType;
 		this.objectProperties = objectProperties;
