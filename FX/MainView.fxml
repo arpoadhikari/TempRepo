@@ -6,12 +6,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,49 +30,221 @@
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="_File">
             <items>
-              <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save As" />
-                  <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#createNew" text="New">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/new.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/open.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/save.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/save-as.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+            <Menu mnemonicParsing="false" text="_Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#addObject" text="Add New Object">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#updateObject" text="Update Object">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#deleteObject" text="Delete Object">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#clearInputs" text="Clear Inputs">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/clear.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="_Tools">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem disable="true" mnemonicParsing="false" text="OR Merger">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/merge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="_Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="About">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/about.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <ToolBar prefHeight="30.0" prefWidth="200.0">
         <items>
-            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="New" />
-          <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openFile" prefWidth="100.0" text="Open" />
-            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Save" />
-            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Save As" />
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createNew" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/new.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Create a new OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
+          <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openFile" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/open.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Open an OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/save.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Save to opened OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveAs" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/save-as.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Save to a new OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
         </items>
       </ToolBar>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="499.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
         <items>
           <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="33.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="179.0" text="Add/Delete Objects" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
+                  <Label alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="200.0" text="Add/Delete Objects" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="applicationNameInput" layoutX="15.0" layoutY="85.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Application Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-                  <TextField fx:id="testTextField1" layoutX="15.0" layoutY="135.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Page Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-                  <TextField fx:id="testTextField11" layoutX="15.0" layoutY="185.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Object Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-                  <TextField fx:id="testTextField111" layoutX="15.0" layoutY="235.0" onAction="#autoPopulate" prefHeight="31.0" prefWidth="270.0" promptText="Object Properties" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-                  <ComboBox fx:id="locatorTypeCombo" layoutX="15.0" layoutY="285.0" prefHeight="31.0" prefWidth="261.0" promptText="Locator Type" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="applicationNameInput" layoutX="15.0" layoutY="85.0" prefHeight="31.0" prefWidth="270.0" promptText="Application Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="pageNameInput" layoutX="15.0" layoutY="135.0" prefHeight="31.0" prefWidth="270.0" promptText="Page Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="objectNameInput" layoutX="15.0" layoutY="185.0" prefHeight="31.0" prefWidth="270.0" promptText="Object Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <ComboBox fx:id="locatorTypeCombo" layoutX="15.0" layoutY="235.0" prefHeight="31.0" prefWidth="261.0" promptText="Locator Type" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="objectPropertyInput" layoutX="15.0" layoutY="285.0" prefHeight="31.0" prefWidth="270.0" promptText="Object Properties" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                   <GridPane layoutX="15.0" layoutY="331.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -78,8 +255,55 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Add / Change" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                        <MenuButton mnemonicParsing="false" prefWidth="100.0" text="Add" textFill="#0d0505" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                          <items>
+                            <MenuItem fx:id="addButton" mnemonicParsing="false" onAction="#addObject" text="Add New">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
+                            <MenuItem fx:id="updateButton" mnemonicParsing="false" onAction="#updateObject" text="Update">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/update.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
+                          </items>
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/add.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Add or Update object">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </MenuButton>
+                        <Button fx:id="clearButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clearInputs" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/clear.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Clears the texts from input fields">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip></Button>
                      </children>
                   </GridPane>
                   <GridPane layoutX="15.0" layoutY="376.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
@@ -92,18 +316,32 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="100.0" text="Delete" GridPane.columnIndex="1" />
+                        <Button fx:id="deleteButton" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteObject" prefWidth="100.0" text="Delete" GridPane.columnIndex="1">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/delete.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Delete the selected object ">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip></Button>
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
           <AnchorPane minWidth="650.0">
                <children>
-                  <TableView fx:id="orTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="690.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="orTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#setInputFieldsOnRowSelect" onKeyReleased="#setInputFieldsOnRowSelect" onMouseClicked="#setInputFieldsOnRowSelect" prefHeight="500.0" prefWidth="690.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                         <TableColumn fx:id="objectName" minWidth="100.0" prefWidth="231.0" text="Object Name" />
-                        <TableColumn fx:id="locatorType" minWidth="90.0" prefWidth="90.0" text="Locator Type" />
-                        <TableColumn fx:id="objectProperties" minWidth="120.0" prefWidth="341.0" text="Object Properties" />
+                        <TableColumn fx:id="locatorType" minWidth="100.0" prefWidth="100.0" text="Locator Type" />
+                        <TableColumn fx:id="objectProperties" minWidth="120.0" prefWidth="325.0" text="Object Properties" />
                     </columns>
                   </TableView>
                </children>
@@ -115,8 +353,9 @@
       </SplitPane>
       <HBox prefHeight="20.0" prefWidth="1000.0">
          <children>
-            <Pane prefHeight="21.0" prefWidth="736.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="statusText" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="268.0" text="Status" HBox.hgrow="NEVER" />
+            <Label fx:id="leftStatusText" prefHeight="21.0" prefWidth="405.0" text="Object count -" HBox.hgrow="NEVER" />
+            <Pane prefHeight="21.0" prefWidth="152.0" HBox.hgrow="ALWAYS" />
+            <Label fx:id="rightStatusText" alignment="CENTER_RIGHT" layoutX="739.0" layoutY="10.0" prefHeight="21.0" prefWidth="650.0" text="Right Status" />
          </children>
          <VBox.margin>
             <Insets left="5.0" right="5.0" />
