@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object_Repository>
+  <Application name="Gmail">
+    <Page name="Register">
+      <Object reference="UsernameInput" locatorType="name" property="user">Gmail.Register.UsernameInput</Object>
+      <Object reference="Password" locatorType="name" property="pwd">Gmail.Register.Password</Object>
+    </Page>
+  </Application>
+  <Application name="Facebook">
+    <Page name="Login">
+      <Object reference="Password" locatorType="name" property="">Facebook.Login.Password</Object>
+      <Object reference="UsernameInput" locatorType="cssSelector" property="//input[@id='user']">Facebook.Login.UsernameInput</Object>
+    </Page>
+  </Application>
+  <Application name="Bing">
+    <Page name="Home">
+      <Object reference="SearchBox" locatorType="linkText" property="search">Bing.Home.SearchBox</Object>
+      <Object reference="SearchButton" locatorType="id" property="input">Bing.Home.SearchButton</Object>
+    </Page>
+  </Application>
+</Object_Repository>
+
