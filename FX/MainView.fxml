@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -143,14 +144,17 @@
             </Menu>
           <Menu mnemonicParsing="false" text="_Tools">
             <items>
-              <MenuItem disable="true" mnemonicParsing="false" text="OR Merger">
+              <MenuItem mnemonicParsing="false" onAction="#launchMerger" text="Merge">
                      <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../icons/merge.png" />
                            </image>
                         </ImageView>
-                     </graphic></MenuItem>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_Help">
@@ -229,6 +233,23 @@
                      </font>
                   </Tooltip>
                </tooltip></Button>
+            <Separator orientation="VERTICAL" />
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#launchMerger" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/merge.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Merge OR Files">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
         </items>
       </ToolBar>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="499.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
