@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.MergerViewController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="100.0" prefWidth="1000.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+         <children>
+            <Button fx:id="importFile" maxWidth="-Infinity" mnemonicParsing="false" onAction="#importData" prefWidth="100.0" text="Import">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/import.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Label fx:id="header1" alignment="CENTER" layoutX="15.0" layoutY="65.0" maxWidth="-Infinity" prefWidth="1000.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="header2" alignment="CENTER" maxWidth="-Infinity" prefWidth="1000.0" text="Click on Import to load an Object Repository file for merging.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Accordion fx:id="accordion" layoutY="150.0" prefHeight="495.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <panes>
+          <TitledPane fx:id="uniqueObjectPane" text="Unique Objects">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="orMergerTable" prefHeight="390.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                          <columns>
+                            <TableColumn fx:id="objectName_Merged" prefWidth="250.0" text="Object Name" />
+                              <TableColumn fx:id="locatorType_Merged" prefWidth="150.0" text="Locator Type" />
+                              <TableColumn fx:id="objectProperties_Merged" prefWidth="400.0" text="Object Properties" />
+                          </columns>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </TableView>
+                        <GridPane layoutX="433.6" layoutY="400.0" prefHeight="30.0" prefWidth="139.0" AnchorPane.bottomAnchor="9.600000000000001" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="160.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button fx:id="merge" mnemonicParsing="false" onAction="#merge" prefWidth="100.0" text="Merge">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/merge.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+          </TitledPane>
+          <TitledPane fx:id="duplicateObjectPane" expanded="false" text="Duplicate Objects">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="orDuplicateTable" prefHeight="390.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                           <columns>
+                              <TableColumn fx:id="objectName_Duplicate" prefWidth="250.0" text="Object Name" />
+                              <TableColumn fx:id="locatorType_Duplicate" prefWidth="150.0" text="Locator Type" />
+                              <TableColumn fx:id="objectProperties_Duplicate" prefWidth="400.0" text="Object Properties" />
+                           </columns>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </TableView>
+                        <GridPane layoutX="359.0" layoutY="399.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="359.0" AnchorPane.rightAnchor="349.4">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Button fx:id="move" maxWidth="-Infinity" mnemonicParsing="false" onAction="#moveObject" prefWidth="100.0" text="Move" GridPane.halignment="RIGHT">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/move.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="delete" maxWidth="-Infinity" mnemonicParsing="false" onAction="#deleteObject" prefWidth="100.0" text="Delete" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/delete.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+          </TitledPane>
+        </panes>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+      </Accordion>
+   </children>
+</AnchorPane>
