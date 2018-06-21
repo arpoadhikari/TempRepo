@@ -30,6 +30,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -69,29 +70,27 @@ public class MainViewController {
 	@FXML
 	private TextField objectNameInput;
 	@FXML
-	private ComboBox<String> locatorTypeCombo;
-	@FXML
 	private TextField objectPropertyInput;
 	@FXML
+	private ComboBox<String> locatorTypeCombo;
+	@FXML
 	private Button addEditButton;
+	@FXML
+	private Button clearButton;
+	@FXML
+	private Button deleteButton;
 	@FXML
 	private MenuButton addUpdateMenuButton;
 	@FXML
 	private MenuItem addButton;
 	@FXML
 	private MenuItem updateButton;
-	@FXML
-	private Button clearButton;
-	@FXML
-	private Button deleteButton;
 
 	public static String xmlPath = "";
-	private ObservableList<ObjectRepositoryData> masterData = FXCollections.observableArrayList();
+	public static ObservableList<ObjectRepositoryData> masterData = FXCollections.observableArrayList();
 	private List<Application> appList = new ArrayList<>();
 
-	AutoCompletionBinding<String> autoBindingAppNameInput;
-	AutoCompletionBinding<String> autoBindingPageNameInput;
-	AutoCompletionBinding<String> autoBindingObjectNameInput;
+	AutoCompletionBinding<String> autoBindingAppNameInput, autoBindingPageNameInput, autoBindingObjectNameInput;
 
 	/**
 	 * Initializes the application
@@ -111,40 +110,40 @@ public class MainViewController {
 		// Listener	to auto populate the Suggestion List for Application Name
 		applicationNameInput.focusedProperty().addListener(new ChangeListener<Boolean>()
 		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-		    {
-		        if (newPropertyValue)
-		        {
-		            autoPopulateApplicationList();
-		        }
-		    }
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (newPropertyValue)
+				{
+					autoPopulateApplicationList();
+				}
+			}
 		});
 
 		// Listener	to auto populate the Suggestion List for Page Name
 		pageNameInput.focusedProperty().addListener(new ChangeListener<Boolean>()
 		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-		    {
-		        if (newPropertyValue)
-		        {
-		            autoPopulatePageList();
-		        }
-		    }
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (newPropertyValue)
+				{
+					autoPopulatePageList();
+				}
+			}
 		});
 
 		// Listener	to auto populate the Suggestion List for Object Name
 		objectNameInput.focusedProperty().addListener(new ChangeListener<Boolean>()
 		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-		    {
-		        if (newPropertyValue)
-		        {
-		            autoPopulateObjectList();
-		        }
-		    }
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (newPropertyValue)
+				{
+					autoPopulateObjectList();
+				}
+			}
 		});
 
 		//Listener to restrict '.' in Application name
@@ -177,6 +176,19 @@ public class MainViewController {
 				if (newValue.split("\\.").length > 0 || newValue.contains(".")) {
 					objectNameInput.setText(newValue.replaceAll("[.]", ""));
 				}
+			}
+		});
+
+		// Listener to display the object count on add/remove/replace/update in the or table
+		masterData.addListener(new ListChangeListener<ObjectRepositoryData>() {
+			@Override
+			public void onChanged(ListChangeListener.Change<? extends ObjectRepositoryData> c) {
+				while(c.next()){
+					if(c.wasAdded() || c.wasRemoved() || c.wasReplaced() | c.wasUpdated()){
+						displayObjectCount();
+					}
+				}
+
 			}
 		});
 
@@ -353,7 +365,7 @@ public class MainViewController {
 	@FXML
 	void createNew() {
 		if (xmlPath.length() > 0) {
-			Optional<ButtonType> option = DialogViewController.showConfirmation("Confirmation",
+			Optional<ButtonType> option = DialogViewController.showConfirmation("Create New",
 					"Would you like to save your current work before creating a new object repository ?", xmlPath);
 			if (option.get() == ButtonType.OK) {
 				save();
@@ -397,7 +409,6 @@ public class MainViewController {
 	void clearObjectRepositoryTable() {
 		masterData.clear();
 		orTable.refresh();
-		displayObjectCount();
 	}
 
 	/**
@@ -405,7 +416,7 @@ public class MainViewController {
 	 */
 	@FXML
 	void closeApp() {
-		Optional<ButtonType> option = DialogViewController.showConfirmation("Confirmation", "Confirm Exit", "Are you sure you want to exit ?");
+		Optional<ButtonType> option = DialogViewController.showConfirmation("Close Application", "Confirm Exit", "Are you sure you want to exit ?");
 		if (option.get() == ButtonType.OK) {
 			Platform.exit();
 		}
@@ -417,52 +428,6 @@ public class MainViewController {
 	void displayObjectCount() {
 		leftStatusText.setText("Total Objects : "+orTable.getItems().size());
 	}
-
-	/**
-	 * Add or Edit an object to the Object Repository table
-	 */
-	/*@FXML
-	void addEditObject() {
-
-		String objectName = applicationNameInput.getText().trim()+"."
-				+pageNameInput.getText().trim()+"."
-				+objectNameInput.getText().trim();
-		String locatorType = locatorTypeCombo.getSelectionModel().getSelectedItem();
-		String objectProperty = objectPropertyInput.getText().trim();
-		ObjectRepositoryData object = null;
-		boolean isFound = false;
-
-		if (applicationNameInput.getText().trim().isEmpty() ||
-				pageNameInput.getText().trim().isEmpty() ||
-				objectNameInput.getText().trim().isEmpty() ||
-				locatorTypeCombo.getSelectionModel().isEmpty()) {
-
-			DialogViewController.showAlert("Invalid input", "Application Name/Page Name/Object Name can't be blank !", "Please provide correct input.");
-		}
-		else {
-			for (int i = 0; i < orTable.getItems().size(); i++) {
-				if (orTable.getItems().get(i).getObjectName().equalsIgnoreCase(objectName)) {
-					isFound = true;
-					object = orTable.getItems().get(i);
-					break;
-				}
-			}
-			if (isFound) {
-				Optional<ButtonType> option = DialogViewController.showConfirmation("Overwrite Object", "Are you sure want to overwrite this object ?", objectName);
-				if (option.get() == ButtonType.OK) {
-					masterData.remove(object);
-					masterData.add(new ObjectRepositoryData(objectName, locatorType, objectProperty));
-					setRightStatus("Object overwritten - "+objectName);
-				}
-			}
-			else {
-				masterData.add(new ObjectRepositoryData(objectName, locatorType, objectProperty));
-				setRightStatus("Object created - "+objectName);
-			}
-			orTable.setItems(masterData);
-		}
-		displayObjectCount();
-	}*/
 
 	/**
 	 * Add an object to the Object Repository table
@@ -482,7 +447,7 @@ public class MainViewController {
 				objectNameInput.getText().trim().isEmpty() ||
 				locatorTypeCombo.getSelectionModel().isEmpty()) {
 
-			DialogViewController.showAlert("Invalid input", "Application Name / Page Name / Object Name can't be blank !", "Please provide correct input.");
+			DialogViewController.showAlert("Add Object", "Application Name / Page Name / Object Name can't be blank !", "Please provide correct input.");
 		}
 		else {
 			for (int i = 0; i < orTable.getItems().size(); i++) {
@@ -492,16 +457,15 @@ public class MainViewController {
 				}
 			}
 			if (isFound) {
-				DialogViewController.showAlert("Duplicate Object", "Duplicate object exists, please provide different name", objectName);
+				DialogViewController.showAlert("Add Object", "Duplicate object exists, please provide different name", objectName);
 			}
 			else {
 				masterData.add(new ObjectRepositoryData(objectName, locatorType, objectProperty));
-				setRightStatus("Object created - "+objectName);
+				setRightStatus("Object added - "+objectName);
+				clearInputs();
 			}
 			orTable.setItems(masterData);
-			clearInputs();
 		}
-		displayObjectCount();
 	}
 
 	/**
@@ -515,40 +479,30 @@ public class MainViewController {
 				+objectNameInput.getText().trim();
 		String locatorType = locatorTypeCombo.getSelectionModel().getSelectedItem();
 		String objectProperty = objectPropertyInput.getText().trim();
-		ObjectRepositoryData object = null;
-		boolean isFound = false;
+		ObjectRepositoryData object = orTable.getSelectionModel().getSelectedItem();
 
 		if (applicationNameInput.getText().trim().isEmpty() ||
 				pageNameInput.getText().trim().isEmpty() ||
 				objectNameInput.getText().trim().isEmpty() ||
 				locatorTypeCombo.getSelectionModel().isEmpty()) {
 
-			DialogViewController.showAlert("Invalid input", "Applicaton Name / Page Name / Object Name can't be blank !", "Please provide correct input.");
+			DialogViewController.showAlert("Update Object", "Applicaton Name / Page Name / Object Name can't be blank !", "Please provide correct input.");
 		}
 		else {
-			for (int i = 0; i < orTable.getItems().size(); i++) {
-				if (orTable.getItems().get(i).getObjectName().equalsIgnoreCase(objectName)) {
-					isFound = true;
-					object = orTable.getItems().get(i);
-					break;
-				}
-			}
-			if (isFound) {
-				Optional<ButtonType> option = DialogViewController.showConfirmation("Overwrite Object", "Are you sure want to overwrite this object ?", objectName);
+			if (object != null) {
+				Optional<ButtonType> option = DialogViewController.showConfirmation("Update Object", "Are you sure want to update this object ?", object.getObjectName());
 				if (option.get() == ButtonType.OK) {
 					masterData.remove(object);
 					masterData.add(new ObjectRepositoryData(objectName, locatorType, objectProperty));
-					setRightStatus("Object overwritten - "+objectName);
+					setRightStatus("Object Updated - "+object.getObjectName());
+					clearInputs();
 				}
 			}
 			else {
-				masterData.add(new ObjectRepositoryData(objectName, locatorType, objectProperty));
-				setRightStatus("Object created - "+objectName);
+				DialogViewController.showAlert("Update Object", "No object is selected.", "Please select an item from the table to update.");
 			}
 			orTable.setItems(masterData);
-			clearInputs();
 		}
-		displayObjectCount();
 	}
 
 	/**
@@ -562,13 +516,12 @@ public class MainViewController {
 			if (option.get() == ButtonType.OK) {
 				masterData.remove(object);
 				clearInputs();
-				displayObjectCount();
-				setRightStatus("Object deleted - "+object.getObjectName()+orTable.getItems().size());
+				setRightStatus("Object deleted - "+object.getObjectName());
 			}
 			orTable.requestFocus();
 		}
 		else {
-			DialogViewController.showAlert("Delete Object", "No object is selected.", "Please select an item from the table at first.");
+			DialogViewController.showAlert("Delete Object", "No object is selected.", "Please select an item from the table to delete.");
 		}
 	}
 
@@ -687,6 +640,12 @@ public class MainViewController {
 			autoBindingObjectNameInput.dispose();
 		}
 		autoBindingObjectNameInput = TextFields.bindAutoCompletion(objectNameInput, data);
+	}
+
+	@FXML
+	void launchMerger() throws IOException {
+
+		Main.mergerStage.showAndWait();
 	}
 
 }
