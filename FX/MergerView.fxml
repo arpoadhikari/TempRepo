@@ -79,7 +79,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="merge" mnemonicParsing="false" onAction="#merge" prefWidth="100.0" text="Merge">
+                              <Button fx:id="merge" disable="true" mnemonicParsing="false" onAction="#merge" prefWidth="100.0" text="Merge">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -127,7 +127,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Button fx:id="move" maxWidth="-Infinity" mnemonicParsing="false" onAction="#moveObject" prefWidth="100.0" text="Move" GridPane.halignment="RIGHT">
+                              <Button fx:id="move" disable="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#moveObject" prefWidth="100.0" text="Move" GridPane.halignment="RIGHT">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -142,7 +142,7 @@
                                        </font>
                                     </Tooltip>
                                  </tooltip></Button>
-                              <Button fx:id="delete" maxWidth="-Infinity" mnemonicParsing="false" onAction="#deleteObject" prefWidth="100.0" text="Delete" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+                              <Button fx:id="delete" disable="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#deleteObject" prefWidth="100.0" text="Delete" GridPane.columnIndex="2" GridPane.halignment="LEFT">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
