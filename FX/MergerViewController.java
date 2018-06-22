@@ -1,29 +1,18 @@
 package application.views;
 
-import application.support.ObjectProperty;
 import application.support.ObjectRepositoryData;
-import application.support.Page;
 import application.support.XML_Reader;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.table.TableFilter;
 import org.controlsfx.control.table.TableRowExpanderColumn;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import application.Main;
-import application.support.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -46,11 +35,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
 public class MergerViewController {
-
-
-	String xmlPath2 = "";
-
-	private List<Application> appList = new ArrayList<>();
 
 	@FXML
 	private Label header1;
@@ -86,6 +70,8 @@ public class MergerViewController {
 	private TableColumn<ObjectRepositoryData, String> locatorType_Duplicate;
 	@FXML
 	private TableColumn<ObjectRepositoryData, String> objectProperties_Duplicate;
+
+	String xmlPath2 = "";
 
 	private ObservableList<ObjectRepositoryData> xmlData1 = FXCollections.observableArrayList();
 	private ObservableList<ObjectRepositoryData> xmlData2 = FXCollections.observableArrayList();
@@ -273,10 +259,13 @@ public class MergerViewController {
 		orDuplicateTable.refresh();
 
 		xmlData1.addAll(MainViewController.masterData);
-		header1.setText("File 1 selected - "+MainViewController.xmlPath);
+		header1.setText("Object Repository 1 - Loaded (Objects - "+xmlData1.size()+")");
 
 		openFile();
 		loadDataFromXML(xmlPath2, xmlData2);
+		if (xmlData2.size() > 0) {
+			header2.setText("Object Repository 2 - "+xmlPath2+" (Objects - "+xmlData2.size()+")");
+		}
 
 		for (int i = 0; i < xmlData1.size(); i++) {
 
@@ -351,92 +340,6 @@ public class MergerViewController {
 			DialogViewController.showAlert("Merge Objects", mergedData.size()+" Objects are merged.", "Please close this window and save the data from Main Window.");
 		}
 
-	}
-
-	/**
-	 * Creates a list of "Application" class object from the Object Repository table
-	 */
-	void getTableData() {
-
-		int nRow = orMergerTable.getItems().size();
-		String app;
-		String page;
-		String locator;
-		String objectName;
-		String objectProperty;
-		appList = new ArrayList<>();
-		for (int rowIndex = 0; rowIndex < nRow; rowIndex++) {
-
-			app = orMergerTable.getItems().get(rowIndex).getObjectName().split("\\.")[0];
-			page = orMergerTable.getItems().get(rowIndex).getObjectName().split("\\.")[1];
-			objectName = orMergerTable.getItems().get(rowIndex).getObjectName().split("\\.")[2];
-			locator = orMergerTable.getItems().get(rowIndex).getLocatorType();
-			objectProperty = orMergerTable.getItems().get(rowIndex).getObjectProperties();
-
-			boolean appFlag = false;
-			for (Application application : appList) {
-				appFlag = false;
-				if (application.getApp().equals(app)) {
-					application.setPage(page, locator, objectName,
-							objectProperty);
-					appFlag = true;
-					break;
-				}
-			}
-
-			if (!appFlag) {
-				Application application = new Application();
-				application.setApp(app);
-				application.setPage(page, locator, objectName, objectProperty);
-				appList.add(application);
-			}
-		}
-	}
-
-	/**	Generates the XML file from the "Application" class object
-	 * @param appList
-	 * @param fileName
-	 */
-	void prepareXMLTemplate(List<Application> appList, String fileName) {
-
-		Document doc = new Document();
-		Element rootElement = new Element("Object_Repository");
-		doc.setRootElement(rootElement);
-		Element application = null;
-		Element pageNode;
-		Element object = null;
-
-		for (Application app : appList) {
-			application = new Element("Application");
-			application.setAttribute("name", app.getApp());
-
-			for (Page p : app.getPage()) {
-				pageNode = new Element("Page");
-				pageNode.setAttribute("name", p.getPage());
-				application.addContent(pageNode);
-				for (ObjectProperty o : p.getobjectPropertyList()) {
-					object = new Element("Object");
-					object.setAttribute("reference", o.getObject());
-					object.setAttribute("locatorType", o.getLocator());
-					object.setAttribute("property", o.getObjectProperty());
-					object.setText(app.getApp() + "." + p.getPage() + "."
-							+ o.getObject());
-					pageNode.addContent(object);
-				}
-			}
-			doc.getRootElement().addContent(application);
-		}
-
-		XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-		try {
-			FileOutputStream out = new FileOutputStream(fileName);
-			xmlOutputter.output(doc, out);
-			out.close();
-			//setRightStatus("Object repository is saved to - "+fileName);
-		} catch (IOException e) {
-			System.out.println("ERROR! --- Unbale to write into XML : "+fileName+"\n"+e);
-			//DialogViewController.showExceptionDialog("ERROR! --- Unable to write data to XML : "+fileName, e);
-		}
 	}
 
 	/**
@@ -521,14 +424,14 @@ public class MergerViewController {
 		File selectedFile = fileChooser.showOpenDialog(Main.mergerStage);
 		if (selectedFile != null) {
 			xmlPath2 = selectedFile.getAbsolutePath();
-			header2.setText("File 2 selected - "+xmlPath2);
+			header2.setText("Object Repository 2 - "+xmlPath2);
 			Notifications.create().title("Import File")
 			.text("File selected - "+xmlPath2)
 			.position(Pos.BOTTOM_RIGHT).showInformation();
 		}
 		else {
 			xmlPath2 = "";
-			header2.setText("File 2 - Import cancelled !");
+			header2.setText("Object Repository 2 - Import cancelled !");
 			Notifications.create().title("Import File")
 			.text("File import cancelled !")
 			.position(Pos.BOTTOM_RIGHT).showInformation();
