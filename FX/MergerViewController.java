@@ -101,12 +101,21 @@ public class MergerViewController {
 		setTableFilter();
 
 		//Listener to automatically get the object count from Unique Objects table and to display it
+		//and to enable/disable the Merge button
 		mergedData.addListener(new ListChangeListener<ObjectRepositoryData>() {
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends ObjectRepositoryData> c) {
 				while(c.next()){
 					if(c.wasAdded() || c.wasRemoved() || c.wasReplaced() | c.wasUpdated()){
+
 						uniqueObjectPane.setText("Unique Objects ("+mergedData.size()+")");
+
+						if (mergedData.size() > 0) {
+							merge.setDisable(false);
+						}
+						else {
+							merge.setDisable(true);
+						}
 					}
 				}
 
@@ -114,12 +123,23 @@ public class MergerViewController {
 		});
 
 		//Listener to automatically get the object count from Duplicate Objects table and to display it
+		//and to enable/disable Move and Delete button
 		duplicateData.addListener(new ListChangeListener<ObjectRepositoryData>() {
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends ObjectRepositoryData> c) {
 				while(c.next()){
 					if(c.wasAdded() || c.wasRemoved() || c.wasReplaced() | c.wasUpdated()){
+
 						duplicateObjectPane.setText("Duplicate Objects ("+duplicateData.size()+")");
+
+						if (duplicateData.size() > 0) {
+							move.setDisable(false);
+							delete.setDisable(false);
+						}
+						else {
+							move.setDisable(true);
+							delete.setDisable(true);
+						}
 					}
 				}
 
@@ -246,10 +266,9 @@ public class MergerViewController {
 	}
 
 	/**
-	 * Import the OR data and populate in UI
+	 * Clears the data from the table
 	 */
-	@FXML
-	void importData() {
+	void clearTableData() {
 
 		xmlData1.clear();
 		xmlData2.clear();
@@ -257,6 +276,15 @@ public class MergerViewController {
 		duplicateData.clear();
 		orMergerTable.refresh();
 		orDuplicateTable.refresh();
+	}
+
+	/**
+	 * Import the OR data and populate in UI
+	 */
+	@FXML
+	void importData() {
+
+		clearTableData();
 
 		xmlData1.addAll(MainViewController.masterData);
 		header1.setText("Object Repository 1 - Loaded (Objects - "+xmlData1.size()+")");
@@ -309,6 +337,7 @@ public class MergerViewController {
 		orMergerTable.setItems(mergedData);
 		orDuplicateTable.setItems(duplicateData);
 		setTableFilter();
+
 		if(duplicateData.size() > 0) {
 			accordion.setExpandedPane(duplicateObjectPane);
 		}
