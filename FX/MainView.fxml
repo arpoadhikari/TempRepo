@@ -1,175 +1,386 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.MergerViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.MainViewController">
    <children>
-      <VBox alignment="CENTER" prefHeight="100.0" prefWidth="1000.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding>
-         <children>
-            <Button fx:id="importFile" maxWidth="-Infinity" mnemonicParsing="false" onAction="#importData" prefWidth="100.0" text="Import">
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="_File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#createNew" text="New">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/new.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/open.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/save.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/save-as.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="_Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#addObject" text="Add New Object">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#updateObject" text="Update Object">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#deleteObject" text="Delete Object">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#clearInputs" text="Clear Inputs">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/clear.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="_Tools">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#launchMerger" text="Merge">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/merge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="_Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/about.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ToolBar prefHeight="30.0" prefWidth="200.0">
+        <items>
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createNew" prefHeight="25.0" prefWidth="30.0">
                <graphic>
-                  <ImageView pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/import.png" />
+                        <Image url="@../icons/new.png" />
                      </image>
                   </ImageView>
                </graphic>
                <tooltip>
-                  <Tooltip text="Click to load an Object Repository file for merging.">
+                  <Tooltip text="Create a new OR file">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Tooltip>
                </tooltip></Button>
-            <Label fx:id="header1" alignment="CENTER" layoutX="15.0" layoutY="65.0" maxWidth="-Infinity" prefWidth="1000.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="header2" alignment="CENTER" maxWidth="-Infinity" prefWidth="1000.0" text="Click on Import to load an Object Repository file for merging.">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-      <Accordion fx:id="accordion" layoutY="150.0" prefHeight="495.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-        <panes>
-          <TitledPane fx:id="uniqueObjectPane" text="Unique Objects">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openFile" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/open.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Open an OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/save.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Save to opened OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveAs" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/save-as.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Save to a new OR file">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
+            <Separator orientation="VERTICAL" />
+            <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#launchMerger" prefHeight="25.0" prefWidth="30.0">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/merge.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Merge OR Files">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+        </items>
+      </ToolBar>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="499.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+        <items>
+          <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="200.0" text="Add/Delete Objects" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="applicationNameInput" layoutX="15.0" layoutY="85.0" prefHeight="31.0" prefWidth="270.0" promptText="Application Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="pageNameInput" layoutX="15.0" layoutY="135.0" prefHeight="31.0" prefWidth="270.0" promptText="Page Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="objectNameInput" layoutX="15.0" layoutY="185.0" prefHeight="31.0" prefWidth="270.0" promptText="Object Name" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <ComboBox fx:id="locatorTypeCombo" layoutX="15.0" layoutY="235.0" prefHeight="31.0" prefWidth="261.0" promptText="Locator Type" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <TextField fx:id="objectPropertyInput" layoutX="15.0" layoutY="285.0" prefHeight="31.0" prefWidth="270.0" promptText="Object Properties" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                  <GridPane layoutX="15.0" layoutY="331.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <TableView fx:id="orMergerTable" prefHeight="390.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
-                          <columns>
-                            <TableColumn fx:id="objectName_Merged" prefWidth="250.0" text="Object Name" />
-                              <TableColumn fx:id="locatorType_Merged" prefWidth="150.0" text="Locator Type" />
-                              <TableColumn fx:id="objectProperties_Merged" prefWidth="400.0" text="Object Properties" />
-                          </columns>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </TableView>
-                        <GridPane layoutX="433.6" layoutY="400.0" prefHeight="30.0" prefWidth="139.0" AnchorPane.bottomAnchor="9.600000000000001" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="160.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Button fx:id="merge" disable="true" mnemonicParsing="false" onAction="#merge" prefWidth="100.0" text="Merge">
+                        <MenuButton mnemonicParsing="false" prefWidth="100.0" text="Add" textFill="#0d0505" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                          <items>
+                            <MenuItem fx:id="addButton" mnemonicParsing="false" onAction="#addObject" text="Add New">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../icons/merge.png" />
+                                          <Image url="@../icons/add.png" />
                                        </image>
                                     </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                    <Tooltip text="Click to merge the objects into main object repository">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Tooltip>
-                                 </tooltip></Button>
-                           </children>
-                        </GridPane>
+                                 </graphic></MenuItem>
+                            <MenuItem fx:id="updateButton" mnemonicParsing="false" onAction="#updateObject" text="Update">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/update.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></MenuItem>
+                          </items>
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/add.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Add or Update object">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </MenuButton>
+                        <Button fx:id="clearButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clearInputs" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/clear.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Clears the texts from input fields">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip></Button>
                      </children>
-                  </AnchorPane>
-            </content>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-          </TitledPane>
-          <TitledPane fx:id="duplicateObjectPane" expanded="false" text="Duplicate Objects">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  </GridPane>
+                  <GridPane layoutX="15.0" layoutY="376.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <TableView fx:id="orDuplicateTable" prefHeight="390.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
-                           <columns>
-                              <TableColumn fx:id="objectName_Duplicate" prefWidth="250.0" text="Object Name" />
-                              <TableColumn fx:id="locatorType_Duplicate" prefWidth="150.0" text="Locator Type" />
-                              <TableColumn fx:id="objectProperties_Duplicate" prefWidth="400.0" text="Object Properties" />
-                           </columns>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </TableView>
-                        <GridPane layoutX="359.0" layoutY="399.0" prefHeight="45.0" prefWidth="270.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="359.0" AnchorPane.rightAnchor="349.4">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Button fx:id="move" disable="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#moveObject" prefWidth="100.0" text="Move" GridPane.halignment="RIGHT">
-                                 <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/move.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                    <Tooltip text="Click to move the selected object to the unique objects table">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Tooltip>
-                                 </tooltip></Button>
-                              <Button fx:id="delete" disable="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#deleteObject" prefWidth="100.0" text="Delete" GridPane.columnIndex="2" GridPane.halignment="LEFT">
-                                 <graphic>
-                                    <ImageView pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/delete.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                    <Tooltip text="Click to delete a selected object">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Tooltip>
-                                 </tooltip></Button>
-                           </children>
-                        </GridPane>
+                        <Button fx:id="deleteButton" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteObject" prefWidth="100.0" text="Delete" GridPane.columnIndex="1">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/delete.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Delete the selected object ">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip></Button>
                      </children>
-                  </AnchorPane>
-            </content>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-          </TitledPane>
-        </panes>
-         <padding>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minWidth="650.0">
+               <children>
+                  <TableView fx:id="orTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#setInputFieldsOnRowSelect" onKeyReleased="#setInputFieldsOnRowSelect" onMouseClicked="#setInputFieldsOnRowSelect" prefHeight="500.0" prefWidth="690.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn fx:id="objectName" minWidth="100.0" prefWidth="231.0" text="Object Name" />
+                        <TableColumn fx:id="locatorType" minWidth="100.0" prefWidth="100.0" text="Locator Type" />
+                        <TableColumn fx:id="objectProperties" minWidth="120.0" prefWidth="325.0" text="Object Properties" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+         <VBox.margin>
             <Insets left="5.0" right="5.0" />
-         </padding>
-      </Accordion>
+         </VBox.margin>
+      </SplitPane>
+      <HBox prefHeight="20.0" prefWidth="1000.0">
+         <children>
+            <Label fx:id="leftStatusText" prefHeight="21.0" prefWidth="405.0" text="Object count -" HBox.hgrow="NEVER" />
+            <Pane prefHeight="21.0" prefWidth="152.0" HBox.hgrow="ALWAYS" />
+            <Label fx:id="rightStatusText" alignment="CENTER_RIGHT" layoutX="739.0" layoutY="10.0" prefHeight="21.0" prefWidth="650.0" text="Right Status" />
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>
